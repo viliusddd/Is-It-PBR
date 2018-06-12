@@ -14,7 +14,7 @@ class Pbr(object):
         self.textures = {'baseColor':['baseColor', 'baseColour', 'albedo','diffuse', 'diff', 'color', 'colour','albedom', 'alb', 'bs', 'difuse','base_color', 'base_colour', 'alb'],
                          'roughness':['roughness', 'rougness', 'rough', 'rh', 'roughnes', 'rou'],
                           'metallic':['metallic', 'metalness', 'metal', 'metalic','metalnes', 'metallness'],
-                            'normal':['normal', 'normals', 'norm', 'nrml', 'nrm', 'nor', '_n', '_nm'],
+                            'normal':['normal', 'normals', 'norm', 'nrml', 'nrm', 'nor', '_n', '_nm', '_DirectX'],
                         'glossiness':['glossiness', 'gloss', 'glos'],
                 'metallicSmoothness':['metallicSmoothness'],
                 'albedoTransparency':['albedoTransparency'],
