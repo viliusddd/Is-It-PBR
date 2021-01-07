@@ -32,4 +32,4 @@ jobs:
       # Runs a set of commands using the runners shell
       - name: Run a multi-line script
         run: |
-          "C:\tools\miniconda3\envs\py27_x64\python.exe" C:\git\deadline-pipeline\deployment\deploy.py
+          C:\tools\miniconda3\envs\py27_x64\python.exe C:\git\deadline-pipeline\deployment\deploy.py
