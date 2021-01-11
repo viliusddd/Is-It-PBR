@@ -39,14 +39,15 @@ jobs:
       #     C:\tools\miniconda3\envs\py27_x64\python.exe C:\git\deadline-pipeline\deployment\deploy.py
 
       - name: Start Pollinator
+        working-directory: C:\git\deadline-pipeline\pollinator\command
+        shell: cmd
         run: |
           # cd C:\git\deadline-pipeline\pollinator\command
           # cmd /c start.cmd
           # cmd /k start "" start.cmd
           # start "" "cd C:\git\deadline-pipeline\pollinator\command & start.cmd"
-          cmd /k "cd C:\git\deadline-pipeline\pollinator\command & start.cmd"
-        # shell: cmd
-
+          # cmd /k "cd  & start.cmd"
+          start "" start.cmd
 
       - name: Start Paint
         run: |
