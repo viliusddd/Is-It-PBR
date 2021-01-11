@@ -33,14 +33,13 @@ jobs:
           TASKKILL /FI "WINDOWTITLE eq Pollinator*" /F
           TASKKILL /IM deadlinewebservice.exe /F
 
-
-      - name: Deploy plugins
-        run: |
-          net use W: \\10.1.1.7\DeadlineFiles /persistent:yes /savecred
-          cd C:\git\deadline-pipeline\
-          C:\tools\miniconda3\envs\py27_x64\python.exe C:\git\deadline-pipeline\deployment\deploy.py
+      # - name: Deploy plugins
+      #   run: |
+      #     net use W: \\10.1.1.7\DeadlineFiles /persistent:yes /savecred
+      #     cd C:\git\deadline-pipeline\
+      #     C:\tools\miniconda3\envs\py27_x64\python.exe C:\git\deadline-pipeline\deployment\deploy.py
 
       - name: Start Pollinator
         run: |
-          CMD /C "C:\git\deadline-pipeline\pollinator\command\deadline_startup_wconda.cmd"
-
+          cd C:\git\deadline-pipeline\pollinator\command
+          deadline_startup_wconda.cmd
