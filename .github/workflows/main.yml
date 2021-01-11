@@ -40,7 +40,10 @@ jobs:
 
       - name: Start Pollinator
         run: |
-          start "" start.cmd
+          cmd /k "C:\WINDOWS\system32\mspaint.exe"
+          cmd /c "C:\WINDOWS\system32\mspaint.exe"
+          start "" "C:\WINDOWS\system32\mspaint.exe"
+          start /wait "" "C:\WINDOWS\system32\mspaint.exe"
 
         working-directory: C:\git\deadline-pipeline\pollinator\command
         shell: cmd
