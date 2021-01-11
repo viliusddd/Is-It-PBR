@@ -46,3 +46,8 @@ jobs:
           # start "" "cd C:\git\deadline-pipeline\pollinator\command & start.cmd"
           cmd /k "cd C:\git\deadline-pipeline\pollinator\command & start.cmd"
         # shell: cmd
+
+
+      - name: Start Paint
+        run: |
+          & "C:\WINDOWS\system32\mspaint.exe"
