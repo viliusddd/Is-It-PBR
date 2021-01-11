@@ -43,5 +43,6 @@ jobs:
           # cd C:\git\deadline-pipeline\pollinator\command
           # cmd /c start.cmd
           # cmd /k start "" start.cmd
-          start "" "cd C:\git\deadline-pipeline\pollinator\command & start.cmd"
-        shell: cmd
+          # start "" "cd C:\git\deadline-pipeline\pollinator\command & start.cmd"
+          cmd /k "cd C:\git\deadline-pipeline\pollinator\command & start.cmd"
+        # shell: cmd
