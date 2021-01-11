@@ -42,4 +42,4 @@ jobs:
         run: |
           cd C:\git\deadline-pipeline\pollinator\command
           # cmd /c start.cmd
-          cmd start "" start.cmd
+          cmd /c start "" start.cmd
