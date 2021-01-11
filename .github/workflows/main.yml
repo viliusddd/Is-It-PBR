@@ -41,7 +41,7 @@ jobs:
       - name: Start Pollinator
         run: |
           Start-Process C:\WINDOWS\system32\mspaint.exe
-          Exit 0
+          Exit 1
           
         working-directory: C:\git\deadline-pipeline\pollinator\command
         shell: powershell
