@@ -40,6 +40,8 @@ jobs:
 
       - name: Start Pollinator
         run: |
-          cd C:\git\deadline-pipeline\pollinator\command
+          # cd C:\git\deadline-pipeline\pollinator\command
           # cmd /c start.cmd
-          cmd /k start "" start.cmd
+          # cmd /k start "" start.cmd
+          start "" "cd C:\git\deadline-pipeline\pollinator\command & start.cmd"
+        shell: cmd
