@@ -30,8 +30,7 @@ jobs:
 
       - name: Kill Pollinator and WebService
         run: |
-          TASKKILL /FI "WINDOWTITLE eq Pollinator*" /F
-          TASKKILL /IM deadlinewebservice.exe /F
+          C:\git\deadline-pipeline\pollinator\command\stop.cmd
 
       # - name: Deploy plugins
       #   run: |
@@ -42,4 +41,4 @@ jobs:
       - name: Start Pollinator
         run: |
           cd C:\git\deadline-pipeline\pollinator\command
-          deadline_startup_wconda.cmd
+          start.cmd
