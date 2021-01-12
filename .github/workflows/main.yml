@@ -39,8 +39,13 @@ jobs:
       #   working-directory: C:\git\deadline-pipeline
       #   shell: cmd
 
-      - name: Start Pollinator
+      # - name: Start Pollinator
+      #   run: |
+      #     start "" start.cmd
+      #   working-directory: C:\git\deadline-pipeline\pollinator\command
+      #   shell: cmd
+
+      - name: Restart Instance
         run: |
-          start "" start.cmd
-        working-directory: C:\git\deadline-pipeline\pollinator\command
+          shutdown /r
         shell: cmd
