@@ -36,6 +36,7 @@ jobs:
 
           tasklist /FI "IMAGENAME eq deadlinewebservice.exe" | find /I /N "deadlinewebservice.exe">NUL
           if "%ERRORLEVEL%"=="0" TASKKILL /F /IM deadlinewebservice.exe
+        shell: cmd
 
       # - name: Deploy plugins
       #   run: |
