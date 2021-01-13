@@ -29,26 +29,20 @@ jobs:
       - name: See mounted paths
         run: net use
 
-      - name: Kill Pollinator
+      - name: Kill Pollinator and deadlinewebservice.exe
+        orking-directory: C:\git\deadline-pipeline\pollinator\command
+        working-directory: C:\git\deadline-pipeline\pollinator\command
         shell: cmd
-        run: |
-          tasklist /V /FI "WINDOWTITLE eq C:\tools\miniconda3\envs\py27_x64\python.exe" | find /I /N "C:\tools\miniconda3\envs\py27_x64\python.exe">NUL
-          if "%ERRORLEVEL%"=="0" ( TASKKILL /F /FI "WINDOWTITLE eq C:\tools\miniconda3\envs\py27_x64\python.exe*" ) else exit /b 0
+        run: stop.cmd
 
-      - name: Kill WebService
-        shell: cmd
-        run: | 
-          tasklist /FI "IMAGENAME eq deadlinewebservice.exe" | find /I /N "deadlinewebservice.exe">NUL
-          if "%ERRORLEVEL%"=="0" TASKKILL /F /IM deadlinewebservice.exe ELSE EXIT /B 0
 
       - name: Start Pollinator
+        working-directory: C:\git\deadline-pipeline\pollinator\command
+        shell: cmd
         run: |
           c:/salt/salt-call cmd.run "Start-Process -FilePath 'C:\Program Files\Thinkbox\Deadline10\bin\deadlinewebservice.exe'" shell=powershell --local -l debug
           c:/salt/salt-call cmd.run "Start-Process -FilePath 'C:\tools\miniconda3\envs\py27_x64\python.exe' '-B core\run.py config\override-release.json'" cwd='C:\git\deadline-pipeline\pollinator' shell=powershell --local -l debug
           c:/salt/salt-call cmd.run "Start-Process -FilePath 'C:\tools\miniconda3\envs\py27_x64\python.exe' '-B core\run_cancellation.py config\override-release.json'" cwd='C:\git\deadline-pipeline\pollinator' shell=powershell --local -l debug
-          
-        working-directory: C:\git\deadline-pipeline\pollinator\command
-        shell: cmd
 
 
       # - name: Restart Instance
