@@ -30,13 +30,14 @@ jobs:
         run: net use
 
       - name: Kill Pollinator and WebService
+        shell: cmd
         run: | 
-          TASKKILL /F /FI "WINDOWTITLE eq Pollinator*"
-          TASKKILL /F /FI "WINDOWTITLE eq C:\tools\miniconda3\envs\py27_x64\python.exe*"
+          tasklist /V /FI "WINDOWTITLE eq C:\tools\miniconda3\envs\py27_x64\python.exe" | find /I /N "C:\tools\miniconda3\envs\py27_x64\python.exe">NUL
+          if "%ERRORLEVEL%"=="0" TASKKILL /F /FI "WINDOWTITLE eq C:\tools\miniconda3\envs\py27_x64\python.exe*"
 
           tasklist /FI "IMAGENAME eq deadlinewebservice.exe" | find /I /N "deadlinewebservice.exe">NUL
           if "%ERRORLEVEL%"=="0" TASKKILL /F /IM deadlinewebservice.exe
-        shell: cmd
+
 
       # - name: Deploy plugins
       #   run: |
