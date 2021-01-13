@@ -31,7 +31,6 @@ jobs:
 
       - name: Kill Pollinator and deadlinewebservice.exe
         working-directory: C:\git\deadline-pipeline\pollinator\command
-        working-directory: C:\git\deadline-pipeline\pollinator\command
         shell: cmd
         run: stop.cmd
 
