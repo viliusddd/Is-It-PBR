@@ -30,7 +30,7 @@ jobs:
         run: net use
 
       - name: Kill Pollinator and deadlinewebservice.exe
-        orking-directory: C:\git\deadline-pipeline\pollinator\command
+        working-directory: C:\git\deadline-pipeline\pollinator\command
         working-directory: C:\git\deadline-pipeline\pollinator\command
         shell: cmd
         run: stop.cmd
