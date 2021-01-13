@@ -34,19 +34,19 @@ jobs:
       - name: Start Deadline Web Service
         shell: cmd
         run: |
-          c:/salt/salt-call cmd.run "Start-Process -FilePath 'C:\Program Files\Thinkbox\Deadline10\bin\deadlinewebservice.exe'" shell=powershell user=worker --local 
+          c:/salt/salt-call cmd.run "Start-Process -FilePath 'C:\Program Files\Thinkbox\Deadline10\bin\deadlinewebservice.exe'" shell=powershell user=worker 
 
       - name: Start Pollinator
         working-directory: C:\git\deadline-pipeline\pollinator
         shell: cmd
         run: |
-          c:/salt/salt-call cmd.run "Start-Process -FilePath 'C:\tools\miniconda3\envs\py27_x64\python.exe' '-B core\run.py config\override-release.json'" cwd='C:\git\deadline-pipeline\pollinator' shell=powershell --local
+          c:/salt/salt-call cmd.run "Start-Process -FilePath 'C:\tools\miniconda3\envs\py27_x64\python.exe' '-B core\run.py config\override-release.json'" cwd='C:\git\deadline-pipeline\pollinator' shell=powershell
 
       - name: Start Cancellation Pollinator
         working-directory: C:\git\deadline-pipeline\pollinator
         shell: cmd
         run: |
-          c:/salt/salt-call cmd.run "Start-Process -FilePath 'C:\tools\miniconda3\envs\py27_x64\python.exe' '-B core\run_cancellation.py config\override-release.json'" cwd='C:\git\deadline-pipeline\pollinator' shell=powershell --local
+          c:/salt/salt-call cmd.run "Start-Process -FilePath 'C:\tools\miniconda3\envs\py27_x64\python.exe' '-B core\run_cancellation.py config\override-release.json'" cwd='C:\git\deadline-pipeline\pollinator' shell=powershell
  
       # - name: Restart Instance
       #   run: |
