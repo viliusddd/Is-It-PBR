@@ -29,36 +29,18 @@ jobs:
       - name: See mounted paths
         run: net use
 
-      - name: Kill Pollinator and WebService
+      - name: Kill Pollinator
         shell: cmd
         run: | 
           tasklist /V /FI "WINDOWTITLE eq C:\tools\miniconda3\envs\py27_x64\python.exe" | find /I /N "C:\tools\miniconda3\envs\py27_x64\python.exe">NUL
           if "%ERRORLEVEL%"=="0" TASKKILL /F /FI "WINDOWTITLE eq C:\tools\miniconda3\envs\py27_x64\python.exe*"
 
+      - name: Kill WebService
+        shell: cmd
+        run: | 
           tasklist /FI "IMAGENAME eq deadlinewebservice.exe" | find /I /N "deadlinewebservice.exe">NUL
           if "%ERRORLEVEL%"=="0" TASKKILL /F /IM deadlinewebservice.exe
 
-
-      # - name: Deploy plugins
-      #   run: |
-      #     net use W: \\10.1.1.7\DeadlineFiles /persistent:yes /savecred
-      #     C:\tools\miniconda3\envs\py27_x64\python.exe deployment\deploy.py
-      #   working-directory: C:\git\deadline-pipeline
-      #   shell: cmd
-      
-      # - name: Deploy plugins
-      #   run: |
-      #     net use W: \\10.1.1.7\DeadlineFiles /persistent:yes /savecred
-      #     C:\tools\miniconda3\envs\py27_x64\python.exe deployment\deploy.py -f deployment\deploy_plugins.json
-      #   working-directory: C:\git\deadline-pipeline
-      #   shell: cmd
-
-      # - name: Start Pollinator
-      #   run: |
-      #     start "" start.cmd
-      #   working-directory: C:\git\deadline-pipeline\pollinator\command
-      #   shell: cmd
- 
       - name: Start Pollinator
         run: |
           c:/salt/salt-call cmd.run "Start-Process -FilePath 'C:\Program Files\Thinkbox\Deadline10\bin\deadlinewebservice.exe'" shell=powershell --local -l debug
