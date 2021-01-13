@@ -31,15 +31,15 @@ jobs:
 
       - name: Kill Pollinator
         shell: cmd
-        run: | 
-          tasklist /V /FI "WINDOWTITLE eq C:\tools\miniconda3\envs\py27_x64\python.exe" | find /I /N "C:\tools\miniconda3\envs\py27_x64\python.exe">NUL
-          if "%ERRORLEVEL%"=="0" TASKKILL /F /FI "WINDOWTITLE eq C:\tools\miniconda3\envs\py27_x64\python.exe*" else exit 0
+          run: | 
+            tasklist /V /FI "WINDOWTITLE eq C:\tools\miniconda3\envs\py27_x64\python.exe" | find /I /N "C:\tools\miniconda3\envs\py27_x64\python.exe">NUL
+            if "%ERRORLEVEL%"=="0" ( TASKKILL /F /FI "WINDOWTITLE eq C:\tools\miniconda3\envs\py27_x64\python.exe*" ) else exit /b 0
 
       - name: Kill WebService
         shell: cmd
         run: | 
           tasklist /FI "IMAGENAME eq deadlinewebservice.exe" | find /I /N "deadlinewebservice.exe">NUL
-          if "%ERRORLEVEL%"=="0" TASKKILL /F /IM deadlinewebservice.exe else exit 0
+          if "%ERRORLEVEL%"=="0" TASKKILL /F /IM deadlinewebservice.exe ELSE EXIT /B 0
 
       - name: Start Pollinator
         run: |
