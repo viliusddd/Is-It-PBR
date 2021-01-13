@@ -34,7 +34,7 @@ jobs:
       - name: Start Deadline Web Service
         shell: cmd
         run: |
-          c:/salt/salt-call cmd.run "Start-Process -FilePath 'C:\Program Files\Thinkbox\Deadline10\bin\deadlinewebservice.exe'" shell=powershell
+          c:/salt/salt-call cmd.run "Start-Process -FilePath 'C:\Program Files\Thinkbox\Deadline10\bin\deadlinewebservice.exe'" shell=powershell --local
 
       - name: Start Pollinator
         working-directory: C:\git\deadline-pipeline\pollinator
