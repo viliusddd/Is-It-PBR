@@ -16,9 +16,10 @@ on:
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "build"
-  Deploy:
+  DeployPlugins:
+    name: Deploy Plugins
     # The type of runner that the job will run on
-    runs-on: self-hosted
+    runs-on: self-hosted, repository
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
@@ -30,12 +31,23 @@ jobs:
 
       - name: Kill Pollinator and WebService
         run: | 
-          C:\git\deadline-pipeline\pollinator\command\stop.cmd
+          TASKKILL /F /FI "WINDOWTITLE eq Pollinator*"
+          TASKKILL /F /FI "WINDOWTITLE eq C:\tools\miniconda3\envs\py27_x64\python.exe*"
+
+          tasklist /FI "IMAGENAME eq deadlinewebservice.exe" | find /I /N "deadlinewebservice.exe">NUL
+          if "%ERRORLEVEL%"=="0" TASKKILL /F /IM deadlinewebservice.exe
 
       # - name: Deploy plugins
-      #   run: | start.cmd
+      #   run: |
       #     net use W: \\10.1.1.7\DeadlineFiles /persistent:yes /savecred
       #     C:\tools\miniconda3\envs\py27_x64\python.exe deployment\deploy.py
+      #   working-directory: C:\git\deadline-pipeline
+      #   shell: cmd
+      
+      # - name: Deploy plugins
+      #   run: |
+      #     net use W: \\10.1.1.7\DeadlineFiles /persistent:yes /savecred
+      #     C:\tools\miniconda3\envs\py27_x64\python.exe deployment\deploy.py -f deployment\deploy_plugins.json
       #   working-directory: C:\git\deadline-pipeline
       #   shell: cmd
 
@@ -44,14 +56,37 @@ jobs:
       #     start "" start.cmd
       #   working-directory: C:\git\deadline-pipeline\pollinator\command
       #   shell: cmd
-
-      - name: Restart Instance
+ 
+      - name: Start Pollinator
         run: |
-          shutdown /r
+          c:/salt/salt-call cmd.run "Start-Process -FilePath 'C:\Program Files\Thinkbox\Deadline10\bin\deadlinewebservice.exe'" shell=powershell --local -l debug
+          c:/salt/salt-call cmd.run "Start-Process -FilePath 'C:\tools\miniconda3\envs\py27_x64\python.exe' '-B core\run.py config\override-release.json'" cwd='C:\git\deadline-pipeline\pollinator' shell=powershell --local -l debug
+          c:/salt/salt-call cmd.run "Start-Process -FilePath 'C:\tools\miniconda3\envs\py27_x64\python.exe' '-B core\run_cancellation.py config\override-release.json'" cwd='C:\git\deadline-pipeline\pollinator' shell=powershell --local -l debug
+          
+        working-directory: C:\git\deadline-pipeline\pollinator\command
         shell: cmd
 
+
+      # - name: Restart Instance
+      #   run: |
+      #     shutdown /r
+      #   shell: cmd
+
+  # DeployAssets:
+  #   name: Deploy Assets 
+  #   runs-on: self-hosted, fileshare
+  #   steps:
+  #     - uses: actions/checkout@v2
+  #     - name: Deploy plugins
+  #       run: |
+  #         net use W: \\10.1.1.7\DeadlineFiles /persistent:yes /savecred
+  #         C:\tools\miniconda3\envs\py27_x64\python.exe deployment\deploy.py -f deployment\deploy_plugins.json
+  #       working-directory: C:\git\deadline-pipeline
+  #       shell: cmd
+
+
   NotifySlack:
-    name: Slack Notification
+    name: Notify Slack
     runs-on: ubuntu-latest
     needs: Deploy
     steps:
