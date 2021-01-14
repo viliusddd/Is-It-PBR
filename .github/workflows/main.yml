@@ -30,9 +30,9 @@ jobs:
         id: another-post-run-command
         with:
           command: |
-            powershell -command Start-Process -FilePath 'C:\Program Files\Thinkbox\Deadline10\bin\deadlinewebservice.exe' -WorkingDirectory 'C:\git\deadline-pipeline\pollinator'
-            powershell -command Start-Process -FilePath 'C:\tools\miniconda3\envs\py27_x64\python.exe' '-B core\run.py config\override-release.json' -WorkingDirectory 'C:\git\deadline-pipeline\pollinator'
-            powershell -command Start-Process -FilePath 'C:\tools\miniconda3\envs\py27_x64\python.exe' '-B core\run_cancellation.py config\override-release.json' -WorkingDirectory 'C:\git\deadline-pipeline\pollinator'
+            powershell -command "Start-Process -FilePath 'C:\Program Files\Thinkbox\Deadline10\bin\deadlinewebservice.exe' -WorkingDirectory 'C:\git\deadline-pipeline\pollinator'"
+            powershell -command "Start-Process -FilePath 'C:\tools\miniconda3\envs\py27_x64\python.exe' '-B core\run.py config\override-release.json' -WorkingDirectory 'C:\git\deadline-pipeline\pollinator'"
+            powershell -command "Start-Process -FilePath 'C:\tools\miniconda3\envs\py27_x64\python.exe' '-B core\run_cancellation.py config\override-release.json' -WorkingDirectory 'C:\git\deadline-pipeline\pollinator'"
 
       - name: Kill Pollinator and deadlinewebservice.exe
         working-directory: C:\git\deadline-pipeline\pollinator\command
