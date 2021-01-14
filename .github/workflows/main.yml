@@ -26,6 +26,11 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
 
+      - uses: webiny/action-post-run@1.0.0
+        id: another-post-run-command
+        with:
+          command: mspaint
+
       - name: Kill Pollinator and deadlinewebservice.exe
         working-directory: C:\git\deadline-pipeline\pollinator\command
         shell: cmd
@@ -47,7 +52,7 @@ jobs:
         shell: cmd
         run: |
           c:/salt/salt-call cmd.run "Start-Process -FilePath 'C:\tools\miniconda3\envs\py27_x64\python.exe' '-B core\run_cancellation.py config\override-release.json'" cwd='C:\git\deadline-pipeline\pollinator' shell=powershell --local
- 
+  
       # - name: Restart Instance
       #   run: |
       #     shutdown /r
