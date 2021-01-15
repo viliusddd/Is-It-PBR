@@ -24,7 +24,7 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      # - uses: actions/checkout@v2
+      - uses: actions/checkout@v1
 
       # - name: Kill Pollinator and deadlinewebservice.exe
       #   working-directory: C:\git\deadline-pipeline\pollinator\command
@@ -34,8 +34,7 @@ jobs:
       - name: Start Deadline Web Service
         shell: cmd
         run: |
-          echo "run deadlinewebserviceS"
-        post: "C:\Program Files\Thinkbox\Deadline10\bin\deadlinewebservice.exe"
+          PowerShell -Command "Start-Process -FilePath 'C:\Program Files\Thinkbox\Deadline10\bin\deadlinewebservice.exe'"
 
       # - name: Start Pollinator
       #   working-directory: C:\git\deadline-pipeline\pollinator
