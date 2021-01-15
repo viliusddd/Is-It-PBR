@@ -4,4 +4,4 @@ jobs:
   build:
     runs-on: self-hosted
     steps:
-    - uses: viliusddd/composite@main
+    - uses: viliusddd/composite@master
