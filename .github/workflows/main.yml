@@ -34,7 +34,7 @@ jobs:
       - name: Start Deadline Web Service
         shell: cmd
         run: |
-          powershell -command "Start-Process -FilePath 'C:\Program Files\Thinkbox\Deadline10\bin\deadlinewebservice.exe'"
+          PowerShell -Command "Start-Process -FilePath 'C:\Program Files\Thinkbox\Deadline10\bin\deadlinewebservice.exe'"
 
       # - name: Start Pollinator
       #   working-directory: C:\git\deadline-pipeline\pollinator
@@ -48,12 +48,6 @@ jobs:
       #   run: |
       #     c:/salt/salt-call cmd.run "Start-Process -FilePath 'C:\tools\miniconda3\envs\py27_x64\python.exe' '-B core\run_cancellation.py config\override-release.json'" cwd='C:\git\deadline-pipeline\pollinator' shell=powershell --local
   
-      - uses: webiny/action-post-run@1.0.0
-        id: another-post-run-command
-        with:
-          command: |
-            "C:\Program Files\Thinkbox\Deadline10\bin\deadlinewebservice.exe"
-
       # - name: Restart Instance
       #   run: |
       #     shutdown /r
@@ -71,6 +65,16 @@ jobs:
   #       working-directory: C:\git\deadline-pipeline
   #       shell: cmd
 
+  StartPollinator:
+    name: Start Pollinator
+    runs-on: self-hosted 
+    needs: DeployPlugins
+    steps:
+      - uses: webiny/action-post-run@1.0.0
+        id: another-post-run-command
+        with:
+          command: |
+            Powershell -Command "Start-Process -FilePath 'C:\Program Files\Thinkbox\Deadline10\bin\deadlinewebservice.exe'"
 
   NotifySlack:
     name: Notify Slack
