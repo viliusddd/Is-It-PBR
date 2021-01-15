@@ -4,8 +4,8 @@ jobs:
   build:
     runs-on: self-hosted
     steps:
-    - uses: actions/checkout@v2
-      - uses: viliusddd/composite@master
-    - uses: octocat/say-hello@v1
-      with: 
-        name: OctoCat
+      - uses: actions/checkout@v2
+        - uses: viliusddd/composite@master
+      - uses: octocat/say-hello@v1
+        with: 
+          name: OctoCat
