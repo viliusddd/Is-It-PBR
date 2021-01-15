@@ -1,0 +1,9 @@
+name: My Workflow
+on: [push, pull_request]
+jobs:
+  build:
+    runs-on: self-hosted
+    steps:
+    - uses: viliusddd/execute-ps
+      with:
+        myInput: world
