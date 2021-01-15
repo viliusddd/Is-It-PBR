@@ -79,7 +79,7 @@ jobs:
   NotifySlack:
     name: Notify Slack
     runs-on: ubuntu-latest
-    needs: DeployPlugins
+    needs: StartPollinator
     steps:
     - uses: actions/checkout@v2
     - name: Slack Notification
