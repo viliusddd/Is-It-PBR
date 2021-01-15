@@ -34,7 +34,8 @@ jobs:
       - name: Start Deadline Web Service
         shell: cmd
         run: |
-          PowerShell -Command "Start-Process -FilePath 'C:\Program Files\Thinkbox\Deadline10\bin\deadlinewebservice.exe'"
+          echo "run deadlinewebserviceS"
+        post: "C:\Program Files\Thinkbox\Deadline10\bin\deadlinewebservice.exe"
 
       # - name: Start Pollinator
       #   working-directory: C:\git\deadline-pipeline\pollinator
