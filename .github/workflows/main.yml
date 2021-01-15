@@ -26,10 +26,10 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
 
-      - name: Kill Pollinator and deadlinewebservice.exe
-        working-directory: C:\git\deadline-pipeline\pollinator\command
-        shell: cmd
-        run: stop.cmd
+      # - name: Kill Pollinator and deadlinewebservice.exe
+      #   working-directory: C:\git\deadline-pipeline\pollinator\command
+      #   shell: cmd
+      #   run: stop.cmd
 
       - name: Start Deadline Web Service
         shell: cmd
