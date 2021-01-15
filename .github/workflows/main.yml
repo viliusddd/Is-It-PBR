@@ -26,14 +26,6 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
 
-      - uses: webiny/action-post-run@1.0.0
-        id: another-post-run-command
-        with:
-          command: |
-            powershell -command "Start-Process -FilePath 'C:\Program Files\Thinkbox\Deadline10\bin\deadlinewebservice.exe' -WorkingDirectory 'C:\git\deadline-pipeline\pollinator'"
-            powershell -command "Start-Process -FilePath 'C:\tools\miniconda3\envs\py27_x64\python.exe' '-B core\run.py config\override-release.json' -WorkingDirectory 'C:\git\deadline-pipeline\pollinator'"
-            powershell -command "Start-Process -FilePath 'C:\tools\miniconda3\envs\py27_x64\python.exe' '-B core\run_cancellation.py config\override-release.json' -WorkingDirectory 'C:\git\deadline-pipeline\pollinator'"
-
       - name: Kill Pollinator and deadlinewebservice.exe
         working-directory: C:\git\deadline-pipeline\pollinator\command
         shell: cmd
@@ -56,6 +48,12 @@ jobs:
         run: |
           c:/salt/salt-call cmd.run "Start-Process -FilePath 'C:\tools\miniconda3\envs\py27_x64\python.exe' '-B core\run_cancellation.py config\override-release.json'" cwd='C:\git\deadline-pipeline\pollinator' shell=powershell --local
   
+      - uses: webiny/action-post-run@1.0.0
+        id: another-post-run-command
+        with:
+          command: |
+            powershell -command "Start-Process -FilePath 'C:\Program Files\Thinkbox\Deadline10\bin\deadlinewebservice.exe' -WorkingDirectory 'C:\git\deadline-pipeline\pollinator'"
+
       # - name: Restart Instance
       #   run: |
       #     shutdown /r
