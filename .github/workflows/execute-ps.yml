@@ -4,6 +4,6 @@ jobs:
   build:
     runs-on: self-hosted
     steps:
-    - uses: viliusddd/execute-ps@master
+    - uses: viliusddd/execute-powershell@main
       with:
-        myInput: world
+        milliseconds: 1000
