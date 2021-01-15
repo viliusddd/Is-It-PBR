@@ -34,7 +34,7 @@ jobs:
       - name: Start Deadline Web Service
         shell: cmd
         run: |
-          PowerShell -Command "Start-Process -FilePath 'C:\Program Files\Thinkbox\Deadline10\bin\deadlinewebservice.exe'"
+          PowerShell -Command "Start-Process -FilePath 'C:\Program Files\Thinkbox\Deadline10\bin\deadlinewebservice.exe'; exit 0"
 
       # - name: Start Pollinator
       #   working-directory: C:\git\deadline-pipeline\pollinator
@@ -67,7 +67,7 @@ jobs:
 
   StartPollinator:
     name: Start Pollinator
-    runs-on: self-hosted 
+    runs-on: self-hosted
     needs: DeployPlugins
     steps:
       - uses: webiny/action-post-run@1.0.0
