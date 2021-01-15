@@ -4,4 +4,6 @@ jobs:
   build:
     runs-on: self-hosted
     steps:
+      - name: echo something
+        run: echo "something" 
       - uses: viliusddd/composite@master
