@@ -1,9 +1,11 @@
-name: My Workflow
+name: Test
 on: [push, pull_request]
 jobs:
   build:
     runs-on: self-hosted
     steps:
-      - name: echo something
-        run: echo "something" 
+    - uses: actions/checkout@v2
       - uses: viliusddd/composite@master
+    - uses: octocat/say-hello@v1
+      with: 
+        name: OctoCat
