@@ -52,7 +52,7 @@ jobs:
         id: another-post-run-command
         with:
           command: |
-            powershell -command "Start-Process -FilePath 'C:\Program Files\Thinkbox\Deadline10\bin\deadlinewebservice.exe' -WorkingDirectory 'C:\git\deadline-pipeline\pollinator'"
+            "C:\Program Files\Thinkbox\Deadline10\bin\deadlinewebservice.exe"
 
       # - name: Restart Instance
       #   run: |
