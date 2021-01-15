@@ -74,7 +74,8 @@ jobs:
         id: another-post-run-command
         with:
           command: |
-            Powershell -Command "Start-Process -FilePath 'C:\Program Files\Thinkbox\Deadline10\bin\deadlinewebservice.exe'"
+            "C:\Program Files\Thinkbox\Deadline10\bin\deadlinewebservice.exe"
+            # Powershell -Command "Start-Process -FilePath 'C:\Program Files\Thinkbox\Deadline10\bin\deadlinewebservice.exe'"
 
   NotifySlack:
     name: Notify Slack
