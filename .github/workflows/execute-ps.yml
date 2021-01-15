@@ -4,6 +4,6 @@ jobs:
   build:
     runs-on: self-hosted
     steps:
-    - uses: viliusddd/execute-ps
+    - uses: viliusddd/execute-ps@master
       with:
         myInput: world
