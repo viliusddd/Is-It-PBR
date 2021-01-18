@@ -25,16 +25,16 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      # - name: Kill Pollinator and deadlinewebservice.exe
-      #   working-directory: C:\git\deadline-pipeline\pollinator\command
-      #   shell: cmd
-      #   run: stop.cmd
+      - name: Kill Pollinator and deadlinewebservice.exe
+        working-directory: C:\git\deadline-pipeline\pollinator\command
+        shell: cmd
+        run: stop.cmd
 
       - name: Write WebService status to file
         shell: powershell
         run: |
           $ini = Get-IniContent C:\Users\Giraffe0\pollinator\pollinator.ini 
-          $ini["Pollinator"]["Started"] = "True"  
+          $ini["Pollinator"]["Started"] = "False"  
           $ini | Out-IniFile -encoding ascii -FilePath C:\Users\Giraffe0\pollinator\pollinator.ini -Force
 
       # - name: Start Pollinator
