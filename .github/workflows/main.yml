@@ -23,18 +23,19 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v2
 
       # - name: Kill Pollinator and deadlinewebservice.exe
       #   working-directory: C:\git\deadline-pipeline\pollinator\command
       #   shell: cmd
       #   run: stop.cmd
 
-      - name: Start Deadline Web Service
-        shell: cmd
+      - name: Write WebService status to file
+        shell: powershell
         run: |
-          PowerShell -Command "Start-Process -FilePath 'C:\Program Files\Thinkbox\Deadline10\bin\deadlinewebservice.exe'; exit 0"
+          $ini = Get-IniContent C:\Users\Giraffe0\pollinator\pollinator.ini 
+          $ini["Pollinator"]["Started"] = "True"  
+          $ini | Out-IniFile -FilePath C:\Users\Giraffe0\pollinator\pollinator.ini -Force
 
       # - name: Start Pollinator
       #   working-directory: C:\git\deadline-pipeline\pollinator
@@ -65,26 +66,26 @@ jobs:
   #       working-directory: C:\git\deadline-pipeline
   #       shell: cmd
 
-  StartPollinator:
-    name: Start Pollinator
-    runs-on: self-hosted
-    needs: DeployPlugins
-    steps:
-      - uses: webiny/action-post-run@1.0.0
-        id: another-post-run-command
-        with:
-          command: |
-            "C:\Program Files\Thinkbox\Deadline10\bin\deadlinewebservice.exe"
-            # Powershell -Command "Start-Process -FilePath 'C:\Program Files\Thinkbox\Deadline10\bin\deadlinewebservice.exe'"
+  # StartPollinator:
+  #   name: Start Pollinator
+  #   runs-on: self-hosted
+  #   needs: DeployPlugins
+  #   steps:
+  #     - uses: webiny/action-post-run@1.0.0
+  #       id: another-post-run-command
+  #       with:
+  #         command: |
+  #           "C:\Program Files\Thinkbox\Deadline10\bin\deadlinewebservice.exe"
+  #           # Powershell -Command "Start-Process -FilePath 'C:\Program Files\Thinkbox\Deadline10\bin\deadlinewebservice.exe'"
 
-  NotifySlack:
-    name: Notify Slack
-    runs-on: ubuntu-latest
-    needs: StartPollinator
-    steps:
-    - uses: actions/checkout@v2
-    - name: Slack Notification
-      uses: rtCamp/action-slack-notify@v2
-      env:
-        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
-        CHANNEL: 404
+  # NotifySlack:
+  #   name: Notify Slack
+  #   runs-on: ubuntu-latest
+  #   needs: StartPollinator
+  #   steps:
+  #   - uses: actions/checkout@v2
+  #   - name: Slack Notification
+  #     uses: rtCamp/action-slack-notify@v2
+  #     env:
+  #       SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
+  #       CHANNEL: 404
