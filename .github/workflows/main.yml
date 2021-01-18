@@ -35,7 +35,7 @@ jobs:
         run: |
           $ini = Get-IniContent C:\Users\Giraffe0\pollinator\pollinator.ini 
           $ini["Pollinator"]["Started"] = "True"  
-          $ini | Out-IniFile -FilePath C:\Users\Giraffe0\pollinator\pollinator.ini -Force
+          $ini | Out-IniFile -encoding ascii -FilePath C:\Users\Giraffe0\pollinator\pollinator.ini -Force
 
       # - name: Start Pollinator
       #   working-directory: C:\git\deadline-pipeline\pollinator
