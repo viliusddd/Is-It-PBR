@@ -17,7 +17,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Stop Pollinator and deadlinewebservice.exe
+      - name: Stop Pollinator
         working-directory: C:\git\deadline-pipeline\pollinator\command
         shell: cmd
         run: stop.cmd
@@ -28,13 +28,11 @@ jobs:
         working-directory: C:\git\deadline-pipeline
         shell: cmd
 
-      - name: Set Pollinator and deadlinewebservice status for Start
+      - name: Set Pollinator status for Start
         shell: powershell
         run: |
           $ini = Get-IniContent C:\Users\Giraffe0\pollinator\pollinator.ini
-          $ini["DeadlineWebService"]["Started"] = "False"
           $ini["Pollinator"]["Started"] = "False"
-          $ini["CancellationPollinator"]["Started"] = "False"
           $ini | Out-IniFile -encoding ascii -FilePath C:\Users\Giraffe0\pollinator\pollinator.ini -Force
 
   DeployAssets:
