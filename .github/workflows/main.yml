@@ -15,8 +15,6 @@ jobs:
     name: Deploy Plugins
     runs-on: self-hosted
     steps:
-      - uses: actions/checkout@v2
-
       - name: Stop Pollinator
         working-directory: C:\git\deadline-pipeline\pollinator\command
         shell: cmd
@@ -40,7 +38,6 @@ jobs:
   #   runs-on: self-hosted
   #   needs: DeployPlugins
   #   steps:
-  #     - uses: actions/checkout@v2
   #     - name: Deploy Assets
   #       run: |
   #         net use W: \\10.1.1.7\DeadlineFiles /persistent:yes /savecred
