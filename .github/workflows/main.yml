@@ -1,8 +1,5 @@
-# This is a basic workflow to help you get started with Actions
+name: PluginsDeployment
 
-name: CI
-
-# Controls when the action will run. 
 on:
   # Triggers the workflow on push or pull request events but only for the master branch
   push:
@@ -13,83 +10,53 @@ on:
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build"
   DeployPlugins:
     name: Deploy Plugins
-    # The type of runner that the job will run on
-    runs-on: self-hosted
-
-    # Steps represent a sequence of tasks that will be executed as part of the job
+    runs-on: self-hosted, repository
     steps:
       - uses: actions/checkout@v2
 
-      - name: Kill Pollinator and deadlinewebservice.exe
+      - name: Stop Pollinator and deadlinewebservice.exe
         working-directory: C:\git\deadline-pipeline\pollinator\command
         shell: cmd
         run: stop.cmd
 
-      - name: Write WebService status to file
+      - name: Deploy plugins
+        run: |
+          C:\tools\miniconda3\envs\py27_x64\python.exe deployment\deploy.py -f deployment\deploy_plugins.json
+        working-directory: C:\git\deadline-pipeline
+        shell: cmd
+
+      - name: Set Pollinator and deadlinewebservice status for Start
         shell: powershell
         run: |
           $ini = Get-IniContent C:\Users\Giraffe0\pollinator\pollinator.ini
           $ini["DeadlineWebService"]["Started"] = "False"
-          $ini | Out-IniFile -encoding ascii -FilePath C:\Users\Giraffe0\pollinator\pollinator.ini -Force
-
-          $ini = Get-IniContent C:\Users\Giraffe0\pollinator\pollinator.ini
           $ini["Pollinator"]["Started"] = "False"
+          $ini["CancellationPollinator"]["Started"] = "False"
           $ini | Out-IniFile -encoding ascii -FilePath C:\Users\Giraffe0\pollinator\pollinator.ini -Force
 
-      # - name: Start Pollinator
-      #   working-directory: C:\git\deadline-pipeline\pollinator
-      #   shell: cmd
-      #   run: |
-      #     c:/salt/salt-call cmd.run "Start-Process -FilePath 'C:\tools\miniconda3\envs\py27_x64\python.exe' '-B core\run.py config\override-release.json'" cwd='C:\git\deadline-pipeline\pollinator' shell=powershell --local
+  DeployAssets:
+    name: Deploy Assets
+    runs-on: self-hosted, fileshare
+    steps:
+      - uses: actions/checkout@v2
+      - name: Deploy plugins
+        run: |
+          net use W: \\10.1.1.7\DeadlineFiles /persistent:yes /savecred
+          C:\tools\miniconda3\envs\py27_x64\python.exe deployment\deploy.py -f deployment\deploy_assets.json
+        working-directory: C:\git\deadline-pipeline
+        shell: cmd
 
-      # - name: Start Cancellation Pollinator
-      #   working-directory: C:\git\deadline-pipeline\pollinator
-      #   shell: cmd
-      #   run: |
-      #     c:/salt/salt-call cmd.run "Start-Process -FilePath 'C:\tools\miniconda3\envs\py27_x64\python.exe' '-B core\run_cancellation.py config\override-release.json'" cwd='C:\git\deadline-pipeline\pollinator' shell=powershell --local
-  
-      # - name: Restart Instance
-      #   run: |
-      #     shutdown /r
-      #   shell: cmd
-
-  # DeployAssets:
-  #   name: Deploy Assets 
-  #   runs-on: self-hosted, fileshare
-  #   steps:
-  #     - uses: actions/checkout@v2
-  #     - name: Deploy plugins
-  #       run: |
-  #         net use W: \\10.1.1.7\DeadlineFiles /persistent:yes /savecred
-  #         C:\tools\miniconda3\envs\py27_x64\python.exe deployment\deploy.py -f deployment\deploy_plugins.json
-  #       working-directory: C:\git\deadline-pipeline
-  #       shell: cmd
-
-  # StartPollinator:
-  #   name: Start Pollinator
-  #   runs-on: self-hosted
-  #   needs: DeployPlugins
-  #   steps:
-  #     - uses: webiny/action-post-run@1.0.0
-  #       id: another-post-run-command
-  #       with:
-  #         command: |
-  #           "C:\Program Files\Thinkbox\Deadline10\bin\deadlinewebservice.exe"
-  #           # Powershell -Command "Start-Process -FilePath 'C:\Program Files\Thinkbox\Deadline10\bin\deadlinewebservice.exe'"
-
-  # NotifySlack:
-  #   name: Notify Slack
-  #   runs-on: ubuntu-latest
-  #   needs: StartPollinator
-  #   steps:
-  #   - uses: actions/checkout@v2
-  #   - name: Slack Notification
-  #     uses: rtCamp/action-slack-notify@v2
-  #     env:
-  #       SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
-  #       CHANNEL: 404
+  NotifySlack:
+    name: Notify Slack
+    runs-on: ubuntu-latest
+    needs: StartPollinator
+    steps:
+    - uses: actions/checkout@v2
+    - name: Slack Notification
+    - uses: rtCamp/action-slack-notify@v2
+      env:
+        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
+        CHANNEL: 404
