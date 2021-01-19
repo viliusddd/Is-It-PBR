@@ -40,6 +40,7 @@ jobs:
   DeployAssets:
     name: Deploy Assets
     runs-on: self-hosted
+    depends: DeployPlugins
     steps:
       - uses: actions/checkout@v2
       - name: Deploy plugins
