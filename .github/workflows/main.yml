@@ -1,7 +1,6 @@
 name: PluginsDeployment
 
 on:
-  # Triggers the workflow on push or pull request events but only for the master branch
   push:
     branches: [ master ]
   pull_request:
@@ -13,29 +12,25 @@ on:
 jobs:
   DeployPlugins:
     name: Deploy Plugins
-    runs-on: self-hosted
+    runs-on: self-hosted, repository
     steps:
       - name: Stop Pollinator
         working-directory: C:\git\deadline-pipeline\pollinator\command
         shell: cmd
         run: stop.cmd
 
-      - name: Deploy Plugins
-        run: |
-          C:\tools\miniconda3\envs\py27_x64\python.exe deployment\deploy.py -f deployment\deploy_plugins.json
-        working-directory: C:\git\deadline-pipeline
-        shell: cmd
+      # - name: Deploy Plugins
+      #   run: |
+      #     C:\tools\miniconda3\envs\py27_x64\python.exe deployment\deploy.py -f deployment\deploy_plugins.json
+      #   working-directory: C:\git\deadline-pipeline
+      #   shell: cmd
 
-      - name: Change Pollinator Status
-        shell: powershell
-        run: |
-          $ini = Get-IniContent C:\Users\Giraffe0\pollinator\pollinator.ini
-          $ini["Pollinator"]["Started"] = "False"
-          $ini | Out-IniFile -encoding ascii -FilePath C:\Users\Giraffe0\pollinator\pollinator.ini -Force
+      - name: Start Pollinator
+        run: python C:\temp\client.py
 
   # DeployAssets:
   #   name: Deploy Assets
-  #   runs-on: self-hosted
+  #   runs-on: self-hosted, fileshare
   #   needs: DeployPlugins
   #   steps:
   #     - name: Deploy Assets
@@ -55,4 +50,4 @@ jobs:
   #     uses: rtCamp/action-slack-notify@v2
   #     env:
   #       SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
-  #       CHANNEL: 404
+  #       CHANNEL: 3d-automation-notifications
