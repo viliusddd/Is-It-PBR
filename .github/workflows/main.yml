@@ -12,7 +12,7 @@ on:
 jobs:
   DeployPlugins:
     name: Deploy Plugins
-    runs-on: self-hosted, repository
+    runs-on: repository
     steps:
       - name: Stop Pollinator
         working-directory: C:\git\deadline-pipeline\pollinator\command
