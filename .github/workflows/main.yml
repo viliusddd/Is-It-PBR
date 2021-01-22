@@ -9,11 +9,11 @@ on:
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
-jobs:
-  DeployPlugins:
-    name: Deploy Plugins
-    runs-on: repository
-    steps:
+# jobs:
+#   DeployPlugins:
+#     name: Deploy Plugins
+#     runs-on: repository
+#     steps:
       # - name: Stop Pollinator
       #   working-directory: C:\git\deadline-pipeline\pollinator\command
       #   shell: cmd
