@@ -40,16 +40,16 @@ on:
   #       working-directory: C:\git\deadline-pipeline
   #       shell: cmd
 
-  NotifySlack:
-    name: Notify Slack
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v2
-    - name: Slack Notification
-      uses: rtCamp/action-slack-notify@v2
-      env:
-        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
-        CHANNEL: 404
+  # notifySlack:
+  #   name: Notify Slack
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #   - uses: actions/checkout@v2
+  #   - name: Slack Notification
+  #     uses: rtCamp/action-slack-notify@v2
+  #     env:
+  #       SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
+  #       CHANNEL: 404
 
   slack-workflow-status:
     if: always()
